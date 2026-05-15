@@ -1091,7 +1091,7 @@ function renderBRT(id,ss,rr,isR){
     <thead><tr><th>보스</th><th style="text-align:right">최고</th><th style="text-align:right">평균</th><th style="text-align:right">참여</th></tr></thead>
     <tbody>${st.map((s)=>{
       const bestC=s.best===1?'#f5c842':s.best===2?'#c8d8ff':s.best===3?'#d4845a':(s.best?'var(--ac)':'var(--tx3)');
-      const avgC=s.avg===null?'var(--tx3)':s.best===1?'#f5c842':s.best===2?'#c8d8ff':s.best===3?'#d4845a':'var(--tx)';
+      const avgC=s.avg===null?'var(--tx3)':s.avg===1?'#f5c842':s.avg===2?'#c8d8ff':s.avg===3?'#d4845a':'var(--ac)';
       return`<tr>
       <td><div class="bri"><div class="bri-img">${bi(s.b)}</div><span style="font-size:12px">${s.b}</span></div></td>
       <td class="num" style="color:${bestC}">${s.best?s.best.toLocaleString():'—'}</td>
