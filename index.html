@@ -713,7 +713,12 @@ function tcls(r){return{플래티넘:'plat',골드:'gold',실버:'silver',브론
 function cho(s){const C=['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];return[...s].map(c=>{const cd=c.charCodeAt(0);return cd>=0xAC00&&cd<=0xD7A3?C[Math.floor((cd-0xAC00)/588)]:c;}).join('');}
 function bmatch(boss,q){if(!q)return true;const lq=q.toLowerCase().trim();return(BA[boss]||[boss]).some(a=>a.toLowerCase().includes(lq)||cho(a).includes(lq));}
 function bi(n){const b=D.b[n];return b?`<img src="data:image/webp;base64,${b}" alt="">`:'';}
-function ti(t){const b=D.i[t];return b?`<img class="tic2" src="data:image/webp;base64,${b}" alt="">`:'';}
+function ti(t){
+  const tMap={'시가지':'시가전','야외':'야전','실내':'실내전'};
+  const key=tMap[t]||t;
+  const b=D.i[key];
+  return b?`<img class="tic2" src="data:image/webp;base64,${b}" alt="">`:'';
+}
 function tiImg(r){const t=tier(r);return t?`<img class="ttier" src="data:image/webp;base64,${D.i[t]}" alt="">`:'';}
 function fmt(r){if(!r)return'—';if(r>=10000)return(r/1000).toFixed(1).replace(/\.0$/,'')+'k';return r.toLocaleString();}
 
@@ -782,10 +787,13 @@ function showPg(id,btn){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function openRM(type,key,title,sub){
+function openRM(type,key,title,boss,terrain,diff){
   eT={type,key};
   document.getElementById('rm-t').textContent=title;
-  document.getElementById('rm-s').textContent=sub||'';
+  const parts=[boss];
+  if(terrain)parts.push(ti(terrain));
+  if(diff)parts.push(`<span class="db d${diff.slice(0,3)}">${diff}</span>`);
+  document.getElementById('rm-s').innerHTML=parts.join(' ');
   document.getElementById('rm-v').value=(type==='raid'?RR[key]:ER[key])||'';
   document.getElementById('rm').classList.add('on');
   setTimeout(()=>document.getElementById('rm-v').focus(),80);
@@ -1077,7 +1085,7 @@ function renderRaid(){
   el.innerHTML=ss.map(s=>{
     const r=RR[s.s];
     const mc=r===1?'rank-gold':r===2?'rank-silver':r===3?'rank-bronze':'';
-    return`<div class="tr ${mc}" onclick="openRM('raid','${s.s}','시즌 ${s.s}','${s.boss} · ${s.terrain} · ${s.diff}')">
+    return`<div class="tr ${mc}" onclick="openRM('raid','${s.s}','시즌 ${s.s}','${s.boss}','${s.terrain}','${s.diff}')">
       <div class="tsn">#${s.s}</div>
       <div class="tboss"><div class="tbimg">${bi(s.boss)}</div>
         <div><div class="tbname">${s.boss}</div>
@@ -1100,7 +1108,7 @@ function renderElim(){
     const mc2=r===1?'rank-gold':r===2?'rank-silver':r===3?'rank-bronze':'';
     const diffs=attrDiffs(s);
     const sn=s.isBeta?'β'+String(s.s).slice(-1):'#'+s.s;
-    return`<div class="tr ${mc2}" onclick="openRM('elim','${key}','${s.isBeta?s.s:'시즌 '+s.s}','${s.boss} · ${s.terrain}')">
+    return`<div class="tr ${mc2}" onclick="openRM('elim','${key}','${s.isBeta?s.s:'시즌 '+s.s}','${s.boss}','${s.terrain}',null)">
       <div class="tsn">${sn}</div>
       <div class="tboss"><div class="tbimg">${bi(s.boss)}</div>
         <div style="min-width:0"><div class="tbname">${s.boss}</div>
@@ -1208,7 +1216,7 @@ function selBoss(b){
           const r=rr[String(s.s)];const sn=s.isBeta?'β'+String(s.s).slice(-1):'#'+s.s;
           const diffs=isR?null:attrDiffs(s);
           const selMc=r===1?'rank-gold':r===2?'rank-silver':r===3?'rank-bronze':'';
-          return`<div class="tr ${selMc}" onclick="openRM('${BM}','${s.s}','${isR?'시즌 '+s.s:s.s}','${b} · ${s.terrain}')">
+          return`<div class="tr ${selMc}" onclick="openRM('${BM}','${s.s}','${isR?'시즌 '+s.s:s.s}','${b}','${s.terrain}',${isR?`'${s.diff}'`:null})">
             <div class="tsn">${sn}</div>
             <div class="tmeta" style="gap:4px">${ti(s.terrain)}${isR?`<span class="db d${s.diff.slice(0,3)}">${s.diff}</span>`:diffs.map(d=>`<span class="db ${d.cls}">${d.label}</span>`).join('')}</div>
             <div class="trank ${r?'':'mt'}">${r?r.toLocaleString():'—'}</div>
@@ -1231,7 +1239,7 @@ function ovSec(id,ss,rr,type){
     const rk=r?r.toLocaleString():'—';
     const ovBorder=r===1?'2px solid #f5c842':r===2?'2px solid #c8d8ff':r===3?'2px solid #d4845a':'';
     const ovRkColor=r===1?'#f5c842':r===2?'#c8d8ff':r===3?'#d4845a':'';
-    return`<div class="ovc ${cls||'empty-r'}" style="${ovBorder?'border:'+ovBorder:''}" title="${s.boss} | ${sn} | ${r?r.toLocaleString()+'위':'미입력'}" onclick="openRM('${type}','${s.s}','${s.isBeta?s.s:'시즌 '+s.s}','${s.boss} · ${s.terrain}')">
+    return`<div class="ovc ${cls||'empty-r'}" style="${ovBorder?'border:'+ovBorder:''}" title="${s.boss} | ${sn} | ${r?r.toLocaleString()+'위':'미입력'}" onclick="openRM('${type}','${s.s}','${s.isBeta?s.s:'시즌 '+s.s}','${s.boss}','${s.terrain}',${type==='raid'?`'${s.diff}'`:null})">
       <div class="ovsn">${sn}</div>
       <div class="ovbn">${bn}</div>
       <div class="ovrk" style="${ovRkColor?'color:'+ovRkColor:''}">${rk}</div>
