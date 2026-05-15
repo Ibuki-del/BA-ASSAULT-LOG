@@ -56,10 +56,10 @@ input[type="number"]{-moz-appearance:textfield;appearance:textfield}
 /* STAT CARDS */
 .sgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
 @media(min-width:600px){.sgrid{grid-template-columns:repeat(4,1fr)}}
-.sc{background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--r);padding:12px 14px}
+.sc{background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--r);padding:14px 16px}
 .sc.hero{background:linear-gradient(135deg,rgba(74,158,255,0.12),rgba(37,99,216,0.06));border-color:rgba(74,158,255,0.3)}
-.slbl{font-size:10px;color:var(--tx2);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px}
-.sval{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;color:var(--tx);line-height:1}
+.slbl{font-size:11px;color:var(--tx2);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:5px}
+.sval{font-family:'Rajdhani',sans-serif;font-size:30px;font-weight:700;color:var(--tx);line-height:1}
 .sval.ac{color:var(--ac2)}
 .ssub{font-size:10px;color:var(--tx3);margin-top:3px}
 
@@ -70,15 +70,15 @@ input[type="number"]{-moz-appearance:textfield;appearance:textfield}
 /* TROPHY */
 .trow{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
 .tc{background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--r);padding:10px 6px;text-align:center}
-.tic{width:30px;height:30px;margin:0 auto 4px;display:block}
-.tcnt{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;line-height:1}
-.tnm{font-size:9px;color:var(--tx2);margin-top:2px}
+.tic{width:38px;height:38px;margin:0 auto 6px;display:block}
+.tcnt{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;line-height:1}
+.tnm{font-size:10px;color:var(--tx2);margin-top:2px}
 
 /* IN */
 .inrow{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
-.inc{background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--rs);padding:8px;text-align:center}
-.innum{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:var(--ac)}
-.inlbl{font-size:9px;color:var(--tx3);margin-top:2px}
+.inc{background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--rs);padding:10px;text-align:center}
+.innum{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;color:var(--ac)}
+.inlbl{font-size:10px;color:var(--tx3);margin-top:2px}
 
 /* COLLAPSIBLE */
 details.sec{background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--r);margin-bottom:12px;overflow:hidden}
@@ -93,7 +93,7 @@ details.sec[open] summary::after{transform:rotate(180deg)}
 .brt{width:100%;border-collapse:collapse}
 .brt th,.brt td{padding:7px 6px;font-size:12px;border-bottom:1px solid var(--bd2)}
 .brt th{color:var(--tx3);font-weight:500;font-size:10px;letter-spacing:0.5px;text-transform:uppercase}
-.brt td.num{font-family:'Rajdhani',sans-serif;font-weight:700;text-align:right;font-size:13px}
+.brt td.num{font-family:'Rajdhani',sans-serif;font-weight:700;text-align:right;font-size:14px;min-width:60px}
 .brt tr:last-child td{border-bottom:none}
 .bri{display:flex;align-items:center;gap:7px}
 .bri-img{width:22px;height:22px;border-radius:5px;background:var(--bg3);overflow:hidden;flex-shrink:0}
@@ -288,6 +288,13 @@ details.pb[open] summary::after{transform:rotate(180deg)}
         <div style="font-size:10px;color:var(--tx3);margin-top:2px">전체 시즌 기록을 엑셀 파일로 저장</div>
       </button>
       <button onclick="confirmReset();toggleMenu()" style="width:100%;padding:8px 14px;background:transparent;border:none;color:#f87171;font-size:11px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;text-align:left;opacity:0.7">⚠ 기록 전체 초기화</button>
+      <div style="padding:10px 14px;border-top:1px solid var(--bd2)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <div style="font-size:11px;color:var(--tx2)">↔ 너비 조절 <span id="width-val" style="color:var(--ac);font-weight:700"></span></div>
+          <button onclick="setWidth(1200)" style="background:transparent;border:1px solid var(--bd2);border-radius:4px;color:var(--tx3);font-size:10px;padding:2px 6px;cursor:pointer">↺ 초기화</button>
+        </div>
+        <input type="range" id="width-slider" min="400" max="1400" step="10" style="width:100%;accent-color:var(--ac)" oninput="setWidth(this.value)">
+      </div>
     </div>
     <input type="file" id="impf" accept=".json" style="display:none" onchange="importData(event)">
   </div>
@@ -986,6 +993,21 @@ function confirmReset() {
 
 document.getElementById('em').addEventListener('click', e => { if (e.target === e.currentTarget) closeEM(); });
 
+
+function setWidth(v){
+  v=parseInt(v);
+  document.querySelector('.main').style.maxWidth=v+'px';
+  document.getElementById('width-val').textContent=v+'px';
+  const sl=document.getElementById('width-slider');
+  if(sl)sl.value=v;
+  localStorage.setItem('_ba_width',v);
+}
+function loadWidth(){
+  const saved=localStorage.getItem('_ba_width');
+  const v=saved?parseInt(saved):1200;
+  setWidth(v);
+}
+
 function toggleMenu(){
   const m=document.getElementById('settings-menu');
   m.style.display=m.style.display==='none'?'block':'none';
@@ -1327,6 +1349,7 @@ function rerender(){
 }
 
 load();
+loadWidth();
 renderDash();
 </script>
 <div class="in-tooltip" id="in-tt"></div>
