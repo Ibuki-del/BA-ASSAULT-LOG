@@ -1163,7 +1163,7 @@ function ovSec(id,ss,rr,type){
     const r=rr[String(s.s)];const cls=tcls(r);
     const sn=s.isBeta?'β'+String(s.s).slice(-1):'#'+s.s;
     const bn=bnames[s.boss]||s.boss.slice(0,3);
-    const rk=r?fmt(r):'—';
+    const rk=r?r.toLocaleString():'—';
     const ovBorder=r===1?'2px solid #f5c842':r===2?'2px solid #c8d8ff':r===3?'2px solid #d4845a':'';
     const ovRkColor=r===1?'#f5c842':r===2?'#c8d8ff':r===3?'#d4845a':'';
     return`<div class="ovc ${cls||'empty-r'}" style="${ovBorder?'border:'+ovBorder:''}" title="${s.boss} | ${sn} | ${r?r.toLocaleString()+'위':'미입력'}" onclick="openRM('${type}','${s.s}','${s.isBeta?s.s:'시즌 '+s.s}','${s.boss} · ${s.terrain}')">
