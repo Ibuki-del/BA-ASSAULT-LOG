@@ -1143,11 +1143,13 @@ function renderDash(){
   document.getElementById('t-row').innerHTML=['플래티넘','골드','실버','브론즈'].map(t=>`
     <div class="tc"><img class="tic" src="data:image/webp;base64,${D.i[t]}" alt="${t}"><div class="tcnt">${tc[t]}</div><div class="tnm">${t}</div></div>`).join('');
   // IN 달성 - 총력전/대결전 분리
-  const rR=RS.map(s=>RR[s.s]).filter(Boolean);
-  const eR=ES.map(s=>ER[String(s.s)]).filter(Boolean);
-  const mkIN=(ranks,seasons)=>[10,100,1000,10000].map(n=>{const matched=seasons?seasons.filter(s=>ranks[String(s.s)]&&ranks[String(s.s)]<=n):[];const ttLines=matched.map(s=>(s.isBeta?String(s.s):'#'+s.s)+' '+s.boss+' '+ranks[String(s.s)]+'위').join('|');return`<div class="inc" style="cursor:pointer" onmouseenter="showInTT(event,'${ttLines}')" onmouseleave="hideInTT()"><div class="innum">${matched.length||ranks.filter?.(r=>r<=n)||0}</div><div class="inlbl">IN ${n.toLocaleString()}</div></div>`;}).join('');
-  document.getElementById('in-raid').innerHTML=mkIN(rR,RS);
-  document.getElementById('in-elim').innerHTML=mkIN(eR,ES);
+  const mkIN=(ranks,seasons)=>[10,100,1000,10000].map(n=>{
+    const matched=seasons.filter(s=>ranks[String(s.s)]&&ranks[String(s.s)]<=n);
+    const ttLines=matched.map(s=>(s.isBeta?String(s.s):'#'+s.s)+' '+s.boss+' '+ranks[String(s.s)]+'위').join('|');
+    return`<div class="inc" style="cursor:pointer" onmouseenter="showInTT(event,'${ttLines}')" onmouseleave="hideInTT()"><div class="innum">${matched.length}</div><div class="inlbl">IN ${n.toLocaleString()}</div></div>`;
+  }).join('');
+  document.getElementById('in-raid').innerHTML=mkIN(RR,RS);
+  document.getElementById('in-elim').innerHTML=mkIN(ER,ES);
   renderBRT('brt-r',RS,RR,true);
   renderTopRanks();
   renderBRT('brt-e',ES,ER,false);
