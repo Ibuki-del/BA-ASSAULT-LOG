@@ -12,12 +12,22 @@
   --bg:#060912;--bg2:#0c1224;--bg3:#131b32;--bg4:#1c2545;
   --ac:#4a9eff;--ac2:#7bc4ff;--ac3:#2563d8;--acd:rgba(74,158,255,0.12);
   --gold:#f5c842;--silver:#c0c8d8;--bronze:#d4845a;--plat:#c4a5ff;
+  --gold-tx:#f5c842;--silver-tx:#c8d8ff;--bronze-tx:#d4845a;
   --tx:#e8eeff;--tx2:#8899bb;--tx3:#4a5a7a;
   --bd:rgba(74,158,255,0.18);--bd2:rgba(74,158,255,0.08);
   --lun:#c084fc;--tor:#f87171;--ins:#4ade80;--ext:#fb923c;--hrd:#94a3b8;
   --exp:#ff6b6b;--pen:#ffd93d;--mys:#4fc3f7;--vib:#ce93d8;
   --r:14px;--rs:10px;
 }
+body.light{
+  --bg:#e8ecf2;--bg2:#f0f3f8;--bg3:#dde3ed;--bg4:#cdd5e2;
+  --ac:#1e4ba8;--ac2:#2563d8;--ac3:#173a85;--acd:rgba(30,75,168,0.1);
+  --tx:#0f1929;--tx2:#3d4a63;--tx3:#6878a0;
+  --bd:rgba(30,75,168,0.25);--bd2:rgba(30,75,168,0.12);
+  --gold-tx:#b8860b;--silver-tx:#5a6a85;--bronze-tx:#9a3412;
+}
+body.light{background:#e8ecf2;background-image:radial-gradient(at 20% 0%,rgba(37,99,216,0.06),transparent 50%),radial-gradient(at 80% 100%,rgba(192,132,252,0.04),transparent 50%)}
+body.light .hdr{background:rgba(232,236,242,0.92)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{overscroll-behavior:none}
 body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);background-image:radial-gradient(at 20% 0%,rgba(74,158,255,0.07),transparent 50%),radial-gradient(at 80% 100%,rgba(192,132,252,0.04),transparent 50%);background-attachment:fixed;color:var(--tx);min-height:100vh;font-size:14px;-webkit-font-smoothing:antialiased}
@@ -131,6 +141,20 @@ details.sec[open] summary::after{transform:rotate(180deg)}
 .aTOR-PEN{background:rgba(255,200,0,0.25);color:#ffc800;border:2px solid rgba(255,200,0,0.6);font-weight:700}
 .aTOR-MYS{background:rgba(40,160,255,0.25);color:#28a0ff;border:2px solid rgba(40,160,255,0.6);font-weight:700}
 .aTOR-VIB{background:rgba(180,100,220,0.25);color:#b464dc;border:2px solid rgba(180,100,220,0.6);font-weight:700}
+/* 라이트모드 - 속성/난이도 배지 톤 다운 */
+body.light .dLUN{background:rgba(147,51,234,0.12);color:#7e22ce}
+body.light .dTOR{background:rgba(220,38,38,0.12);color:#b91c1c}
+body.light .dINS{background:rgba(22,163,74,0.12);color:#15803d}
+body.light .dEXT{background:rgba(234,88,12,0.12);color:#c2410c}
+body.light .dHRD{background:rgba(100,116,139,0.12);color:#475569}
+body.light .aEXP{background:rgba(220,38,38,0.1);color:#b91c1c;border-color:rgba(220,38,38,0.3)}
+body.light .aPEN{background:rgba(202,138,4,0.1);color:#a16207;border-color:rgba(202,138,4,0.3)}
+body.light .aMYS{background:rgba(2,132,199,0.1);color:#0369a1;border-color:rgba(2,132,199,0.3)}
+body.light .aVIB{background:rgba(147,51,234,0.1);color:#7e22ce;border-color:rgba(147,51,234,0.3)}
+body.light .aTOR-EXP{background:rgba(220,38,38,0.15);color:#991b1b;border-color:rgba(220,38,38,0.5)}
+body.light .aTOR-PEN{background:rgba(202,138,4,0.15);color:#854d0e;border-color:rgba(202,138,4,0.5)}
+body.light .aTOR-MYS{background:rgba(2,132,199,0.15);color:#075985;border-color:rgba(2,132,199,0.5)}
+body.light .aTOR-VIB{background:rgba(147,51,234,0.15);color:#6b21a8;border-color:rgba(147,51,234,0.5)}
 
 /* FILTER */
 .fbar{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;margin-bottom:10px;align-items:center}
@@ -184,13 +208,17 @@ details.sec[open] summary::after{transform:rotate(180deg)}
 .ovc.gold{background:rgba(245,200,66,0.22);border-color:rgba(245,200,66,0.4)}
 .ovc.silver{background:rgba(192,200,216,0.18);border-color:rgba(192,200,216,0.35)}
 .ovc.bronze{background:rgba(212,132,90,0.18);border-color:rgba(212,132,90,0.35)}
-.ovsn{font-family:'Rajdhani',sans-serif;font-size:8px;font-weight:700;color:rgba(255,255,255,0.4);line-height:1}
-.ovbn{font-size:8px;color:rgba(255,255,255,0.6);line-height:1;margin-top:1px;white-space:nowrap;overflow:hidden;max-width:52px;text-overflow:ellipsis;text-align:center}
-.ovrk{font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;line-height:1;margin-top:2px}
-.ovc.plat .ovrk{color:#e2d4ff}
-.ovc.gold .ovrk{color:#fde68a}
-.ovc.silver .ovrk{color:#e2e8f0}
-.ovc.bronze .ovrk{color:#fed7aa}
+.ovsn{font-family:'Rajdhani',sans-serif;font-size:8px;font-weight:700;color:var(--tx3);line-height:1}
+.ovbn{font-size:8px;color:var(--tx2);line-height:1;margin-top:1px;white-space:nowrap;overflow:hidden;max-width:52px;text-overflow:ellipsis;text-align:center}
+.ovrk{font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;line-height:1;margin-top:2px;color:var(--tx)}
+.ovc.plat .ovrk{color:#a578f0}
+.ovc.gold .ovrk{color:#d4a017}
+.ovc.silver .ovrk{color:#6b7a8f}
+.ovc.bronze .ovrk{color:#b8632f}
+body.light .ovc.plat .ovrk{color:#7c3aed}
+body.light .ovc.gold .ovrk{color:#a16207}
+body.light .ovc.silver .ovrk{color:#475569}
+body.light .ovc.bronze .ovrk{color:#9a3412}
 .ovc.empty-r .ovrk{color:var(--tx3);font-size:9px}
 
 /* RANK INPUT */
@@ -255,6 +283,13 @@ details.pb[open] summary::after{transform:rotate(180deg)}
 .rank-silver .trank,.rank-silver .bkinput{color:#c8d8ff!important;}
 .rank-bronze{background:rgba(212,132,90,0.13)!important;border-left:3px solid #d4845a!important;}
 .rank-bronze .trank,.rank-bronze .bkinput{color:#d4845a!important;}
+/* 라이트모드 메달 - 진한 색으로 */
+body.light .rank-gold{background:rgba(245,200,66,0.18)!important;border-left-color:#d4a017!important;}
+body.light .rank-gold .trank,body.light .rank-gold .bkinput{color:#a16207!important;}
+body.light .rank-silver{background:rgba(140,160,190,0.18)!important;border-left-color:#6b7a8f!important;}
+body.light .rank-silver .trank,body.light .rank-silver .bkinput{color:#475569!important;}
+body.light .rank-bronze{background:rgba(212,132,90,0.18)!important;border-left-color:#b8632f!important;}
+body.light .rank-bronze .trank,body.light .rank-bronze .bkinput{color:#9a3412!important;}
 
 
 .in-tooltip{position:fixed;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--rs);padding:8px 12px;font-size:11px;color:var(--tx);z-index:500;pointer-events:none;display:none;max-width:240px;line-height:1.6;box-shadow:0 4px 16px rgba(0,0,0,0.4)}
@@ -288,6 +323,10 @@ details.pb[open] summary::after{transform:rotate(180deg)}
         <div style="font-size:10px;color:var(--tx3);margin-top:2px">전체 시즌 기록을 엑셀 파일로 저장</div>
       </button>
       <button onclick="confirmReset();toggleMenu()" style="width:100%;padding:8px 14px;background:transparent;border:none;color:#f87171;font-size:11px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;text-align:left;opacity:0.7">⚠ 기록 전체 초기화</button>
+      <div style="padding:10px 14px;border-top:1px solid var(--bd2);display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:11px;color:var(--tx2)">🌗 테마</div>
+        <button onclick="toggleTheme()" id="theme-btn" style="background:var(--bg3);border:1px solid var(--bd2);border-radius:4px;color:var(--tx);font-size:11px;padding:4px 10px;cursor:pointer">🌙 다크</button>
+      </div>
       <div style="padding:10px 14px;border-top:1px solid var(--bd2)">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
           <div style="font-size:11px;color:var(--tx2)">↔ 너비 조절 <span id="width-val" style="color:var(--ac);font-weight:700"></span></div>
@@ -877,7 +916,7 @@ function renderTopRanks(){
       const nb=parseInt(b.sn.replace('#',''))||0;
       return na-nb;
     });
-    const rankColor=rank===1?'#f5c842':rank===2?'#e8eeff':rank===3?'#d4845a':'var(--ac)';
+    const rankColor=rank===1?'var(--gold-tx)':rank===2?'var(--silver-tx)':rank===3?'var(--bronze-tx)':'var(--ac)';
     return`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd2)${rank<=3?';background:rgba(255,255,255,0.025)':''}">
       <div style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:${rankColor};width:36px;text-align:right">${rank}위</div>
       <div style="font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--plat);width:24px">${items.length}회</div>
@@ -1059,6 +1098,20 @@ function loadWidth(){
   const v=saved?parseInt(saved):1200;
   setWidth(v);
 }
+function toggleTheme(){
+  document.body.classList.toggle('light');
+  const isLight=document.body.classList.contains('light');
+  localStorage.setItem('_ba_theme',isLight?'light':'dark');
+  document.getElementById('theme-btn').textContent=isLight?'☀ 라이트':'🌙 다크';
+}
+function loadTheme(){
+  const saved=localStorage.getItem('_ba_theme');
+  if(saved==='light'){
+    document.body.classList.add('light');
+    const btn=document.getElementById('theme-btn');
+    if(btn)btn.textContent='☀ 라이트';
+  }
+}
 
 function toggleMenu(){
   const m=document.getElementById('settings-menu');
@@ -1166,8 +1219,8 @@ function renderBRT(id,ss,rr,isR){
   document.getElementById(id).innerHTML=`
     <thead><tr><th>보스</th><th style="text-align:right">최고</th><th style="text-align:right">평균</th><th style="text-align:right">참여</th></tr></thead>
     <tbody>${st.map((s)=>{
-      const bestC=s.best===1?'#f5c842':s.best===2?'#c8d8ff':s.best===3?'#d4845a':(s.best?'var(--ac)':'var(--tx3)');
-      const avgC=s.avg===null?'var(--tx3)':s.avg===1?'#f5c842':s.avg===2?'#c8d8ff':s.avg===3?'#d4845a':'var(--ac)';
+      const bestC=s.best===1?'var(--gold-tx)':s.best===2?'var(--silver-tx)':s.best===3?'var(--bronze-tx)':(s.best?'var(--ac)':'var(--tx3)');
+      const avgC=s.avg===null?'var(--tx3)':s.avg===1?'var(--gold-tx)':s.avg===2?'var(--silver-tx)':s.avg===3?'var(--bronze-tx)':'var(--ac)';
       return`<tr>
       <td><div class="bri"><div class="bri-img">${bi(s.b)}</div><span style="font-size:12px">${s.b}</span></div></td>
       <td class="num" style="color:${bestC}">${s.best?s.best.toLocaleString():'—'}</td>
@@ -1190,7 +1243,7 @@ function renderBosses(){
     const bss=ss.filter(s=>s.boss===b&&rr[String(s.s)]);
     const best=bss.length?Math.min(...bss.map(s=>rr[String(s.s)])):null;
     const avg=bss.length?Math.round(bss.reduce((a,s)=>a+rr[String(s.s)],0)/bss.length):null;
-    const bestColor=best===1?'#f5c842':best===2?'#c8d8ff':best===3?'#d4845a':'var(--ac)';
+    const bestColor=best===1?'var(--gold-tx)':best===2?'var(--silver-tx)':best===3?'var(--bronze-tx)':'var(--ac)';
     return`<div class="bcard ${aB===b?'sel':''}" onclick="selBoss('${b}')">
       <div class="bcimg">${bi(b)}</div>
       <div class="bcinfo"><div class="bcname">${b}</div>
@@ -1240,8 +1293,8 @@ function ovSec(id,ss,rr,type){
     const sn=s.isBeta?'β'+String(s.s).slice(-1):'#'+s.s;
     const bn=bnames[s.boss]||s.boss.slice(0,3);
     const rk=r?r.toLocaleString():'—';
-    const ovBorder=r===1?'2px solid #f5c842':r===2?'2px solid #c8d8ff':r===3?'2px solid #d4845a':'';
-    const ovRkColor=r===1?'#f5c842':r===2?'#c8d8ff':r===3?'#d4845a':'';
+    const ovBorder=r===1?'2px solid var(--gold-tx)':r===2?'2px solid var(--silver-tx)':r===3?'2px solid var(--bronze-tx)':'';
+    const ovRkColor=r===1?'var(--gold-tx)':r===2?'var(--silver-tx)':r===3?'var(--bronze-tx)':'';
     return`<div class="ovc ${cls||'empty-r'}" style="${ovBorder?'border:'+ovBorder:''}" title="${s.boss} | ${sn} | ${r?r.toLocaleString()+'위':'미입력'}" onclick="openRM('${type}','${s.s}','${s.isBeta?s.s:'시즌 '+s.s}','${s.boss}','${s.terrain}',${type==='raid'?`'${s.diff}'`:null})">
       <div class="ovsn">${sn}</div>
       <div class="ovbn">${bn}</div>
@@ -1404,6 +1457,7 @@ function rerender(){
 
 load();
 loadWidth();
+loadTheme();
 renderDash();
 </script>
 <div class="in-tooltip" id="in-tt"></div>
